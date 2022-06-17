@@ -1,5 +1,6 @@
 package com.example.clone6_backend.model;
 
+import com.example.clone6_backend.dto.request.SignupRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,10 @@ public class User {
 
     @Column
     private String nickname;
+
+    public User (SignupRequestDto requestDto) {
+        this.username = requestDto.getUserEmail();
+        this.password = requestDto.getPassword();
+        this.nickname = requestDto.getNickname();
+    }
 }
