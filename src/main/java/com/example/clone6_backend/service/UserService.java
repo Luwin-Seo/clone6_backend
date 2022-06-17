@@ -4,7 +4,6 @@ import com.example.clone6_backend.dto.request.DupCheckRequestDto;
 import com.example.clone6_backend.dto.request.SignupRequestDto;
 import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
-import com.example.clone6_backend.exceptionHandler.ErrorResponse;
 import com.example.clone6_backend.exceptionHandler.NormalResponse;
 import com.example.clone6_backend.model.User;
 import com.example.clone6_backend.repository.UserRepository;
