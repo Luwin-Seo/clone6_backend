@@ -29,7 +29,7 @@ public class User {
     private String nickname;
 
     public User (SignupRequestDto requestDto) {
-        this.username = requestDto.getUserEmail();
+        this.username = requestDto.getUsername();
         this.password = requestDto.getPassword();
         this.nickname = requestDto.getNickname();
     }

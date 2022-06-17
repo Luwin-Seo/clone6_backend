@@ -21,7 +21,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public ResponseEntity signup(SignupRequestDto requestDto) {
-        if (userRepository.findByUsername(requestDto.getUserEmail()).isPresent()) {
+        if (userRepository.findByUsername(requestDto.getUsername()).isPresent()) {
             throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
         }
         User user = new User(requestDto);
