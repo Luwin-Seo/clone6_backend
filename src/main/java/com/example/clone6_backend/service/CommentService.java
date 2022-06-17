@@ -6,8 +6,11 @@ import com.example.clone6_backend.model.Comment;
 import com.example.clone6_backend.model.Reply;
 import com.example.clone6_backend.repository.CommentRepository;
 import com.example.clone6_backend.repository.ReplyRepository;
+import com.example.clone6_backend.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +23,7 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public List<CommentResponseDto> getComment(Long fundId, Long commentId) {
-        List<CommentResponseDto> commentResponseDtos = new ArrayList<>();
-        List<Comment> commentList = commentRepository.findByIdOrderByCreatedAtDesc(fundId);
-        for(int i = 0; i < commentList.size(); i++){
-            // 객체생성
-            CommentResponseDto commentResponseDto = new CommentResponseDto(commentList.get(i));
-            commentResponseDtos.add(commentResponseDto);
-        }
-        return commentResponseDtos;
+    public ReplyResponseDto showComments(CommentResponseDto responseDto, Long fundId, UserDetailsImpl userDetails){
+
     }
 }
