@@ -1,9 +1,9 @@
 package com.example.clone6_backend.service;
 
+import com.example.clone6_backend.dto.request.DupCheckRequestDto;
 import com.example.clone6_backend.dto.request.SignupRequestDto;
 import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
-import com.example.clone6_backend.exceptionHandler.ErrorResponse;
 import com.example.clone6_backend.exceptionHandler.NormalResponse;
 import com.example.clone6_backend.model.User;
 import com.example.clone6_backend.repository.UserRepository;
@@ -35,4 +35,9 @@ public class UserService {
                         .message("회원가입이 정상적으로 처리되었습니다")
                         .build());
     }
+
+    public boolean dupCheck(DupCheckRequestDto requestDto) {
+        return !userRepository.findByUsername(requestDto.getUsername()).isPresent();
+        }
 }
+

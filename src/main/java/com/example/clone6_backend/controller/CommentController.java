@@ -1,11 +1,9 @@
 package com.example.clone6_backend.controller;
 
-import com.example.clone6_backend.dto.request.CommentRequestDto;
 import com.example.clone6_backend.dto.response.CommentResponseDto;
 import com.example.clone6_backend.dto.response.ReplyResponseDto;
 import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
-import com.example.clone6_backend.model.Comment;
 import com.example.clone6_backend.repository.CommentRepository;
 import com.example.clone6_backend.security.UserDetailsImpl;
 import com.example.clone6_backend.service.CommentService;
@@ -25,10 +23,7 @@ public class CommentController {
 
     @GetMapping("/api/fund/{fundId}/comments")
     public ReplyResponseDto showComment(@RequestBody CommentResponseDto responseDto, @AuthenticationPrincipal Long fundId,@AuthenticationPrincipal UserDetailsImpl userDetails){
-        if(userDetails.equals("")){throw new CustomException(ErrorCode.USER_NOT_FOUND);}
+        if(userDetails == null){throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return commentService.showComments(responseDto,fundId, userDetails);
     }
-
-
-
 }

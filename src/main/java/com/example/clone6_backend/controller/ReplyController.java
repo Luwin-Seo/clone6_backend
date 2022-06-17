@@ -19,20 +19,19 @@ public class ReplyController {
 
     @PostMapping("/api/fund/comment/{commentId}/reply")
     public ReplyResponseDto createReply(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
-        if(userDetails.equals("")){throw new CustomException(ErrorCode.USER_NOT_FOUND);}
-
+        if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return replyService.createReply(requestDto,commentId,userDetails);
     }
 
     @PutMapping("/api/fund/commment/{commentId}/reply")
     public ReplyResponseDto update(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
-        if(userDetails.equals("")){throw new CustomException(ErrorCode.USER_NOT_FOUND);}
+        if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return replyService.update(requestDto, commentId, userDetails);
     }
 
     @DeleteMapping("/api/fund/comment/reply/{replyId}")
     public ResponseEntity delete(@PathVariable Long replyId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-            if(userDetails.equals("")){throw new CustomException(ErrorCode.USER_NOT_FOUND);}
-            return replyService.delete(replyId, userDetails);
+        if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
+        return replyService.delete(replyId, userDetails);
     }
 }
