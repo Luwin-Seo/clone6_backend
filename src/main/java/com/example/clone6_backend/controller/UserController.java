@@ -1,5 +1,6 @@
 package com.example.clone6_backend.controller;
 
+import com.example.clone6_backend.dto.request.DupCheckRequestDto;
 import com.example.clone6_backend.dto.request.SignupRequestDto;
 import com.example.clone6_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,11 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity signup(@Valid @RequestBody SignupRequestDto requestDto) {
         return userService.signup(requestDto);
+    }
+
+    @PostMapping("/dupCheck")
+    public boolean dupCheck(@RequestBody DupCheckRequestDto requestDto) {
+        return userService.dupCheck(requestDto);
     }
 
     @GetMapping("/test")

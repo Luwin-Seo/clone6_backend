@@ -2,6 +2,8 @@ package com.example.clone6_backend.controller;
 
 import com.example.clone6_backend.dto.request.CommentRequestDto;
 import com.example.clone6_backend.dto.response.CommentResponseDto;
+import com.example.clone6_backend.exceptionHandler.CustomException;
+import com.example.clone6_backend.exceptionHandler.ErrorCode;
 import com.example.clone6_backend.model.Comment;
 import com.example.clone6_backend.repository.CommentRepository;
 import com.example.clone6_backend.security.UserDetailsImpl;
@@ -30,14 +32,12 @@ public class CommentController {
 
     @PostMapping("/api/fund/{fundId}/comment")
     public CommentResponseDto createComment(CommentRequestDto requestDto, @PathVariable Long fundId, UserDetailsImpl userDetails) {
-        if(requestDto.getComment() == ""){
-            throw new NullPointerException("내용을 입력해주세요.");
+        if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
+        if(requestDto.getComment().equals("")){
+            throw new CustomException(ErrorCode.EMPTY_CONTENT);
         }
         Comment comment = new Comment(requestDto, fundId, userDetails);
         commentRepository.save(comment);
         return new CommentResponseDto(comment);
     }
-
-
-
 }
