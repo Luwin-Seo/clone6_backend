@@ -30,12 +30,4 @@ public class Comment extends Timestamped{
 
     @Column(nullable = false)
     private String category;
-
-
-    public Comment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails) {
-//        this.fundId = fundId;
-//        this.comment = requestDto.getComment();
-//        this.nickname = userDetails.getUser().getNickname();
-
-    }
 }
