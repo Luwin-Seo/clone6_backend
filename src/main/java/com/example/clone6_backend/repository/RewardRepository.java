@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface RewardRepository extends JpaRepository<Reward, Long> {
     List<Reward> findAllByFundId(Long fundId);
+    Reward findByRewardId(Long rewardId);
 }
