@@ -4,7 +4,6 @@ import com.example.clone6_backend.model.Reply;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.http.RequestEntity;
 
 @Getter
 @AllArgsConstructor
@@ -17,7 +16,9 @@ public class ReplyResponseDto {
     private String createAt;
 
     public ReplyResponseDto(Reply reply) {
-
+        this.commentId = reply.getCommentId();
+        this.replyId = reply.getReplyId();
         this.replyContent = reply.getReplyContent();
     }
+
 }

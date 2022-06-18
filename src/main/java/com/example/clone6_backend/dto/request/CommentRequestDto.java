@@ -8,6 +8,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentRequestDto {
-    private String comment;
+
+    private Long fundId;
+
+    private String content;
+
+    private String nickname;
+
     private String category;
+
 }

@@ -1,7 +1,7 @@
 package com.example.clone6_backend.model;
 
-import com.example.clone6_backend.dto.request.CommentRequestDto;
-import com.example.clone6_backend.security.UserDetailsImpl;
+import com.example.clone6_backend.dto.response.CommentResponseDto;
+import com.example.clone6_backend.dto.response.ReplyResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends Timestamped{
+public class Comment extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
@@ -30,4 +30,15 @@ public class Comment extends Timestamped{
 
     @Column(nullable = false)
     private String category;
+
+
+
+
+    public Comment(CommentResponseDto responseDto, Long fundId) {
+        this.findId = fundId;
+        this.content = responseDto.getContent();
+        this.commentId = responseDto.getCommentId();
+        this.category = responseDto.getCategory();
+        this.id = responseDto.getId();
+    }
 }

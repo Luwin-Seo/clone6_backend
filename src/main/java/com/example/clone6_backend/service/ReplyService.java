@@ -19,22 +19,24 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    public ReplyResponseDto createReply(ReplyRequestDto requestDto, Long commentId, UserDetailsImpl userDetails) {
+    public ResponseEntity createReply(ReplyRequestDto requestDto, Long commentId, UserDetailsImpl userDetails) {
         if(requestDto.getReplyContent().equals("")){
             throw new CustomException(ErrorCode.EMPTY_CONTENT);
         }
         Reply reply = new Reply(requestDto, commentId, userDetails.getUser().getNickname());
         replyRepository.save(reply);
-        return new ReplyResponseDto(reply);
+        ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply);
+        return new ResponseEntity(replyResponseDto, HttpStatus.OK);
     }
 
-    public ReplyResponseDto update(ReplyRequestDto requestDto, Long replyId, UserDetailsImpl userDetails) {
+    public ResponseEntity update(ReplyRequestDto requestDto, Long replyId, UserDetailsImpl userDetails) {
         Reply reply = replyRepository.findById(replyId).orElseThrow(
                 () -> new CustomException(ErrorCode.REPLY_NOT_FOUND)
         );
         reply.update(requestDto,userDetails);
         replyRepository.save(reply);
-        return new ReplyResponseDto(reply);
+        ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply);
+        return new ResponseEntity(replyResponseDto, HttpStatus.OK);
     }
 
     public ResponseEntity delete(Long replyId, UserDetailsImpl userDetails) {
