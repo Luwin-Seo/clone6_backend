@@ -46,5 +46,4 @@ public class Reward {
         this.quantityLimit = requsetDto.getQuantityLimit();
         this.quantity = requsetDto.getQuantity();
     }
-
 }

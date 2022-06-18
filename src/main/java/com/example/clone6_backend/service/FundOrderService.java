@@ -8,7 +8,6 @@ import com.example.clone6_backend.model.FundOrderDetail;
 import com.example.clone6_backend.repository.FundOrderDetailRepository;
 import com.example.clone6_backend.repository.FundOrderRepository;
 import com.example.clone6_backend.repository.RewardRepository;
-import com.example.clone6_backend.repository.UserRepository;
 import com.example.clone6_backend.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
