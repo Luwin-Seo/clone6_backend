@@ -18,13 +18,13 @@ public class ReplyController {
     private final ReplyService replyService;
 
     @PostMapping("/api/fund/comment/{commentId}/reply")
-    public ReplyResponseDto createReply(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity createReply(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return replyService.createReply(requestDto,commentId,userDetails);
     }
 
     @PutMapping("/api/fund/commment/{commentId}/reply")
-    public ReplyResponseDto update(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity update(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return replyService.update(requestDto, commentId, userDetails);
     }
