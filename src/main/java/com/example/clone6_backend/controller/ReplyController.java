@@ -7,6 +7,7 @@ import com.example.clone6_backend.exceptionHandler.ErrorCode;
 import com.example.clone6_backend.security.UserDetailsImpl;
 import com.example.clone6_backend.service.ReplyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReplyController {
 
+
     private final ReplyService replyService;
+
+
 
     @PostMapping("/api/fund/comment/{commentId}/reply")
     public ResponseEntity createReply(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
