@@ -4,7 +4,6 @@ import com.example.clone6_backend.dto.request.CommentRequestDto;
 import com.example.clone6_backend.dto.response.CommentResponseDto;
 import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
-import com.example.clone6_backend.model.Comment;
 import com.example.clone6_backend.repository.CommentRepository;
 import com.example.clone6_backend.security.UserDetailsImpl;
 import com.example.clone6_backend.service.CommentService;
@@ -12,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
