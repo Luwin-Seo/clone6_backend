@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 
 @Service
 @RequiredArgsConstructor
@@ -32,9 +30,7 @@ public class ReplyService {
     }
 
     public ResponseEntity update(ReplyRequestDto requestDto, Long replyId, UserDetailsImpl userDetails) {
-        Reply reply = replyRepository.findById(replyId).orElseThrow(
-                () -> new CustomException(ErrorCode.REPLY_NOT_FOUND)
-        );
+        Reply reply = replyRepository.findByReplyId(replyId);
         reply.update(requestDto,userDetails);
         replyRepository.save(reply);
         ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply);
@@ -42,9 +38,7 @@ public class ReplyService {
     }
 
     public ResponseEntity delete(Long replyId, UserDetailsImpl userDetails) {
-        Reply reply = replyRepository.findById(replyId).orElseThrow(
-                () -> new CustomException(ErrorCode.COMMENT_NOT_FOUND)
-        );
+        Reply reply = replyRepository.findByReplyId(replyId);
         if(userDetails.getUser().getId().equals(reply.getId())){
             replyRepository.delete(reply);
             return new ResponseEntity("삭제 완료", HttpStatus.OK);

@@ -1,7 +1,7 @@
 package com.example.clone6_backend.dto.response;
 
-import com.example.clone6_backend.dto.request.FundOrderDetailRequestDto;
 import com.example.clone6_backend.model.Comment;
+import com.example.clone6_backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +30,22 @@ public class CommentResponseDto {
     private List<ReplyResponseDto> replyResponseDto;
 
 
-    public CommentResponseDto(Comment comment) {
+    public CommentResponseDto(Comment comment, User user) {
+        this.fundId = comment.getFundId();
+        this.commentId = comment.getCommentId();
+        this.nickname = user.getNickname();
+        this.content = comment.getContent();
+        this.category = comment.getCategory();
+        this.createAt = comment.getCreatedAt();
     }
+    public CommentResponseDto(Comment comment) {
+        this.fundId = comment.getFundId();
+        this.commentId = comment.getCommentId();
+        this.nickname = comment.getNickname();
+        this.content = comment.getContent();
+        this.category = comment.getCategory();
+        this.createAt = comment.getCreatedAt();
+    }
+
+
 }

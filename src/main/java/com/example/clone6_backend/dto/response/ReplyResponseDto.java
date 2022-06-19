@@ -1,6 +1,7 @@
 package com.example.clone6_backend.dto.response;
 
 import com.example.clone6_backend.model.Reply;
+import com.example.clone6_backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,13 +20,12 @@ public class ReplyResponseDto {
     private String nickname;
     private LocalDateTime createAt;
 
-    public ReplyResponseDto(Reply reply){
+    public ReplyResponseDto(Reply reply, User user){
         this.commentId = reply.getCommentId();
         this.replyId = reply.getReplyId();
         this.replyContent = reply.getReplyContent();
-        this.nickname = reply.getNickname();
+        this.nickname = user.getNickname();
         this.createAt = reply.getCreatedAt();
     }
-
 
 }

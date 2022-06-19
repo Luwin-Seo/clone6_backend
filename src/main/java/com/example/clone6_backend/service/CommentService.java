@@ -7,6 +7,7 @@ import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
 import com.example.clone6_backend.model.Comment;
 import com.example.clone6_backend.model.Reply;
+import com.example.clone6_backend.model.User;
 import com.example.clone6_backend.repository.CommentRepository;
 import com.example.clone6_backend.repository.ReplyRepository;
 import com.example.clone6_backend.repository.UserRepository;
@@ -17,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,25 +36,28 @@ public class CommentService {
     public List<CommentResponseDto> showComments(Long fundId){
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
         List<Comment> commentList = commentRepository.findAllByFundId(fundId);
-        for(int i = 0; i < commentList.size(); i++){
-            Comment comment = commentList.get(i);
-            CommentResponseDto commentResponseDto = new CommentResponseDto();
-            commentResponseDto.setCommentId(comment.getCommentId());
-            commentResponseDto.setFundId(comment.getFundId());
-            commentResponseDto.setContent(comment.getContent());
-            commentResponseDto.setCategory(comment.getCategory());
-            commentResponseDto.setCreateAt(comment.getCreatedAt());
-            commentResponseDto.setNickname(userRepository.findById(comment.getId()).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND)).getNickname());
+        for(Comment comment : commentList){
+//        for(int i = 0; i < commentList.size(); i++){
+//            Comment comment = commentList.get(i);
+            User user = userRepository.findById(comment.getId()).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment,user);
+//            commentResponseDto.setCommentId(comment.getCommentId());
+//            commentResponseDto.setFundId(comment.getFundId());
+//            commentResponseDto.setContent(comment.getContent());
+//            commentResponseDto.setCategory(comment.getCategory());
+//            commentResponseDto.setCreateAt(comment.getCreatedAt());
+//            commentResponseDto.setNickname(userRepository.findById(comment.getId()).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND)).getNickname());
         List<ReplyResponseDto> replyResponseDtoList = new ArrayList<>();
         List<Reply> replyList = replyRepository.findAllByCommentId(comment.getCommentId());
-            for(int j = 0; j < replyList.size(); j++){
-                Reply reply = replyList.get(j);
-                ReplyResponseDto replyResponseDto = new ReplyResponseDto();
-                replyResponseDto.setCommentId(reply.getCommentId());
-                replyResponseDto.setReplyContent(reply.getReplyContent());
-                replyResponseDto.setCreateAt(reply.getCreatedAt());
-                replyResponseDto.setReplyId(reply.getReplyId());
-                replyResponseDto.setNickname(userRepository.findById(reply.getId()).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND)).getNickname());
+        for(Reply reply : replyList){
+//            for(int j = 0; j < replyList.size(); j++){
+//                Reply reply = replyList.get(j);
+                ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply, user);
+//                replyResponseDto.setCommentId(reply.getCommentId());
+//                replyResponseDto.setReplyContent(reply.getReplyContent());
+//                replyResponseDto.setCreateAt(reply.getCreatedAt());
+//                replyResponseDto.setReplyId(reply.getReplyId());
+//                replyResponseDto.setNickname(userRepository.findById(reply.getId()).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND)).getNickname());
                 replyResponseDtoList.add(replyResponseDto);
             }
             commentResponseDto.setReplyResponseDto(replyResponseDtoList);
@@ -74,9 +77,7 @@ public class CommentService {
     }
 
     public ResponseEntity putComment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails){
-        Comment comment = commentRepository.findById(fundId).orElseThrow(
-                ()-> new CustomException(ErrorCode.COMMENT_NOT_FOUND)
-        );
+        Comment comment = commentRepository.findByFundId(fundId);
         if(requestDto.getContent().equals("")){
             throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
         }
@@ -87,9 +88,7 @@ public class CommentService {
     }
 
     public ResponseEntity delete(Long commentId, UserDetailsImpl userDetails) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(
-                ()-> new CustomException(ErrorCode.COMMENT_NOT_FOUND)
-        );
+        Comment comment = commentRepository.findByCommentId(commentId);
         if(userDetails.getUser().getNickname().equals(comment.getNickname())){
             commentRepository.delete(comment);
             return new ResponseEntity("삭제 완료",HttpStatus.OK);
