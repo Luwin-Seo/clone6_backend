@@ -8,6 +8,7 @@ import com.example.clone6_backend.exceptionHandler.NormalResponse;
 import com.example.clone6_backend.model.User;
 import com.example.clone6_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,7 @@ public class UserService {
         String password = passwordEncoder.encode(requestDto.getPassword());
         user.setPassword(password);
         userRepository.save(user);
-        return ResponseEntity
-                .status(200)
-                .body(NormalResponse.builder()
-                        .status(200)
-                        .message("회원가입이 정상적으로 처리되었습니다")
-                        .build());
+        return new ResponseEntity("회원가입이 정상적으로 처리되었습니다", HttpStatus.OK);
     }
 
     public boolean dupCheck(DupCheckRequestDto requestDto) {
