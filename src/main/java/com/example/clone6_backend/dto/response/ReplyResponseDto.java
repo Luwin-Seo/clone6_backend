@@ -27,5 +27,12 @@ public class ReplyResponseDto {
         this.nickname = user.getNickname();
         this.createAt = reply.getCreatedAt();
     }
+    public ReplyResponseDto(Reply reply){
+        this.commentId = reply.getCommentId();
+        this.replyId = reply.getReplyId();
+        this.replyContent = reply.getReplyContent();
+        this.nickname = reply.getNickname();
+        this.createAt = reply.getCreatedAt();
+    }
 
 }
