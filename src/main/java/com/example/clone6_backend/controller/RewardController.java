@@ -18,7 +18,7 @@ public class RewardController {
 
     private final RewardService rewardService;
 
-    @PostMapping("/tset/reward/{}")
+    @PostMapping("/tset/reward")
     public Reward postReward(@RequestBody RewardRequsetDto requsetDto) {
         return rewardRepository.save(new Reward(requsetDto));
     }

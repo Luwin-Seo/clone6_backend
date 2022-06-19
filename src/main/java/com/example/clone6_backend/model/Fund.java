@@ -1,7 +1,9 @@
 package com.example.clone6_backend.model;
 
+import com.example.clone6_backend.dto.request.FundRequestDto;
 import com.example.clone6_backend.dto.response.FundResponseDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Getter
+@NoArgsConstructor
 public class Fund {
 
     @Id
@@ -41,16 +44,15 @@ public class Fund {
     private LocalDateTime expDate;
 
 
-    public Fund() {
-        this.fundId = getFundId();
-        this.title = getTitle();
-        this.subTitle = getSubTitle();
-        this.content = getContent();
-        this.category = getCategory();
-        this.fundingGoal = getFundingGoal();
-        this.currentFund = getCurrentFund();
-        this.imageURL = getImageURL();
-        this.expDate = getExpDate();
+    public Fund(FundRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.subTitle = requestDto.getSubTitle();
+        this.content = requestDto.getContent();
+        this.category = requestDto.getCategory();
+        this.fundingGoal = requestDto.getFundingGoal();
+        this.currentFund = requestDto.getCurrentFund();
+        this.imageURL = requestDto.getImageURL();
+        this.expDate = requestDto.getExpDate();
     }
 
     public void detailPage(FundResponseDto fundResponseDto) {
