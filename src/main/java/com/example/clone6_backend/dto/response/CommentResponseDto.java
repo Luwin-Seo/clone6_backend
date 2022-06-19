@@ -1,14 +1,17 @@
 package com.example.clone6_backend.dto.response;
 
-import com.example.clone6_backend.dto.request.FundOrderDetailRequestDto;
 import com.example.clone6_backend.model.Comment;
+import com.example.clone6_backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentResponseDto {
@@ -16,24 +19,33 @@ public class CommentResponseDto {
 
     private Long commentId;
 
-    private Long id;
+    private String nickname;
 
     private String content;
 
     private String category;
 
-    private String createAt;
+    private LocalDateTime createAt;
 
     private List<ReplyResponseDto> replyResponseDto;
 
 
-    public CommentResponseDto(Comment comment) {
-        this.fundId = comment.getCommentId();
+    public CommentResponseDto(Comment comment, User user) {
+        this.fundId = comment.getFundId();
+        this.commentId = comment.getCommentId();
+        this.nickname = user.getNickname();
         this.content = comment.getContent();
         this.category = comment.getCategory();
-        this.id = comment.getId();
-        this.fundId = comment.getFindId();
-        this.createAt = getCreateAt();   //이거 잘모르겠음
-        this.replyResponseDto = getReplyResponseDto();
+        this.createAt = comment.getCreatedAt();
     }
+    public CommentResponseDto(Comment comment) {
+        this.fundId = comment.getFundId();
+        this.commentId = comment.getCommentId();
+        this.nickname = comment.getNickname();
+        this.content = comment.getContent();
+        this.category = comment.getCategory();
+        this.createAt = comment.getCreatedAt();
+    }
+
+
 }

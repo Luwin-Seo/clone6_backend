@@ -6,5 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
-    List<Reply> findAllByReplyId(Long replyId);
+    List<Reply> findAllByCommentId(Long commentId);
+
+    Reply findByReplyId(Long replyId);
 }

@@ -1,7 +1,7 @@
 package com.example.clone6_backend.model;
 
-import com.example.clone6_backend.dto.response.CommentResponseDto;
-import com.example.clone6_backend.dto.response.ReplyResponseDto;
+import com.example.clone6_backend.dto.request.CommentRequestDto;
+import com.example.clone6_backend.security.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class Comment extends Timestamped {
     private Long id;
 
     @Column(nullable = false)
-    private Long findId;
+    private Long fundId;
 
     @Column(nullable = false)
     private String content;
@@ -31,14 +31,26 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String category;
 
+    @Column(nullable = false)
+    private String nickname;
 
 
+    public Comment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails) {
+        this.fundId = fundId;
+        this.content = requestDto.getContent();
+        this.nickname = userDetails.getUser().getNickname();
+        this.category = requestDto.getCategory();
 
-    public Comment(CommentResponseDto responseDto, Long fundId) {
-        this.findId = fundId;
-        this.content = responseDto.getContent();
-        this.commentId = responseDto.getCommentId();
-        this.category = responseDto.getCategory();
-        this.id = responseDto.getId();
     }
+
+
+
+    public void update(CommentRequestDto requestDto, UserDetailsImpl userDetails) {
+        this.fundId = requestDto.getFundId();
+        this.content = requestDto.getContent();
+        this.nickname = requestDto.getNickname();
+        this.category = requestDto.getCategory();
+        this.id = userDetails.getUser().getId();
+    }
+
 }

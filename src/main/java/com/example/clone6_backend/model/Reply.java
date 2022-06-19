@@ -2,10 +2,7 @@ package com.example.clone6_backend.model;
 
 import com.example.clone6_backend.dto.request.ReplyRequestDto;
 import com.example.clone6_backend.security.UserDetailsImpl;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -26,13 +23,19 @@ public class Reply extends Timestamped{
     private Long commentId;
 
     @Column(nullable = false)
-    private Long findId;
+    private Long fundId;
 
     @Column(nullable = false)
     private String replyContent;
 
+    @Column
+    private String nickname;
+
+
     public Reply(ReplyRequestDto requestDto, Long commentId, String nickname) {
         this.replyContent = requestDto.getReplyContent();
+        this.commentId = commentId;
+        this.nickname = nickname;
     }
 
     public void update(ReplyRequestDto requestDto, UserDetailsImpl userDetails) {

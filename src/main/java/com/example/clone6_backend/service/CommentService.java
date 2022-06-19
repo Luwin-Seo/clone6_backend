@@ -7,15 +7,17 @@ import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
 import com.example.clone6_backend.model.Comment;
 import com.example.clone6_backend.model.Reply;
+import com.example.clone6_backend.model.User;
 import com.example.clone6_backend.repository.CommentRepository;
 import com.example.clone6_backend.repository.ReplyRepository;
+import com.example.clone6_backend.repository.UserRepository;
 import com.example.clone6_backend.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
-import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,35 +31,68 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public List<CommentResponseDto> showComments(CommentResponseDto commentResponseDto, Long fundId, Long replyId){
-        // 댓글을 다찾아서 리스트형식의 comments에 담는다.
-        List<Comment> comments = commentRepository.findAllByFundId(fundId);
-        // commentResponseDtos 의 객체 에 몰아 담아줄려고
-        List<CommentResponseDto> commentResponseDtos = new ArrayList<>();
+    private final UserRepository userRepository;
 
-        //댓글하나하나들을 comment에 담아준다
-        for (Comment comment : comments) {
-            // 대댓글들을 모두찾아서 replies에 담는다
-            List<Reply> replies = replyRepository.findAllByReplyId(replyId);
-            // replyResponseDtos 객체에 리스트들을 담는다
-            List<ReplyResponseDto> replyResponseDtos = new ArrayList<>();
-            // 대댓글들을 reply에 담는다
-            for (Reply reply: replies){
-                // replyResponseDto에 담아주는데 어떤애들을 담을지 적어준다.
-                ReplyResponseDto replyResponseDto = new ReplyResponseDto(
-
-                );
+    public List<CommentResponseDto> showComments(Long fundId){
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        List<Comment> commentList = commentRepository.findAllByFundId(fundId);
+        for(Comment comment : commentList){
+//        for(int i = 0; i < commentList.size(); i++){
+//            Comment comment = commentList.get(i);
+            User user = userRepository.findById(comment.getId()).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment,user);
+//            commentResponseDto.setCommentId(comment.getCommentId());
+//            commentResponseDto.setFundId(comment.getFundId());
+//            commentResponseDto.setContent(comment.getContent());
+//            commentResponseDto.setCategory(comment.getCategory());
+//            commentResponseDto.setCreateAt(comment.getCreatedAt());
+//            commentResponseDto.setNickname(userRepository.findById(comment.getId()).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND)).getNickname());
+        List<ReplyResponseDto> replyResponseDtoList = new ArrayList<>();
+        List<Reply> replyList = replyRepository.findAllByCommentId(comment.getCommentId());
+        for(Reply reply : replyList){
+//            for(int j = 0; j < replyList.size(); j++){
+//                Reply reply = replyList.get(j);
+                ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply, user);
+//                replyResponseDto.setCommentId(reply.getCommentId());
+//                replyResponseDto.setReplyContent(reply.getReplyContent());
+//                replyResponseDto.setCreateAt(reply.getCreatedAt());
+//                replyResponseDto.setReplyId(reply.getReplyId());
+//                replyResponseDto.setNickname(userRepository.findById(reply.getId()).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND)).getNickname());
+                replyResponseDtoList.add(replyResponseDto);
             }
+            commentResponseDto.setReplyResponseDto(replyResponseDtoList);
+            commentResponseDtoList.add(commentResponseDto);
         }
-        }
-
-
-    public ResponseEntity postComment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails){
-        if(requestDto.getContents().equals("")){
-            throw new CustomException(ErrorCode.EMPTY_CONTENT);
-        }
-
+        return commentResponseDtoList;
     }
 
+    public ResponseEntity postComment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails){
+        if(requestDto.getContent().equals("")){
+            throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
+        }
+        Comment comment = new Comment(requestDto, fundId, userDetails);
+        commentRepository.save(comment);
+        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+        return new ResponseEntity(commentResponseDto, HttpStatus.OK);
+    }
 
+    public ResponseEntity putComment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails){
+        Comment comment = commentRepository.findByFundId(fundId);
+        if(requestDto.getContent().equals("")){
+            throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
+        }
+        comment.update(requestDto,userDetails);
+        commentRepository.save(comment);
+        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+        return new ResponseEntity(commentResponseDto, HttpStatus.OK);
+    }
+
+    public ResponseEntity delete(Long commentId, UserDetailsImpl userDetails) {
+        Comment comment = commentRepository.findByCommentId(commentId);
+        if(userDetails.getUser().getNickname().equals(comment.getNickname())){
+            commentRepository.delete(comment);
+            return new ResponseEntity("삭제 완료",HttpStatus.OK);
+        }
+        throw new CustomException(ErrorCode.INVALID_AUTHORITY);
+    }
 }
