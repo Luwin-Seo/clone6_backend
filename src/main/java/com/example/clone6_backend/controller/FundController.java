@@ -1,8 +1,6 @@
 package com.example.clone6_backend.controller;
 
 import com.example.clone6_backend.dto.response.FundResponseDto;
-import com.example.clone6_backend.exceptionHandler.CustomException;
-import com.example.clone6_backend.exceptionHandler.ErrorCode;
 import com.example.clone6_backend.model.Fund;
 import com.example.clone6_backend.repository.FundRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +18,7 @@ public class FundController {
     //펀딩 상품 상세 조회
     @GetMapping("/api/fund/{fundId}")
     public FundResponseDto detailPage(@PathVariable Long fundId){
-        Fund fund = fundRepository.findById(fundId).orElseThrow(()
-                -> new CustomException(ErrorCode.FUND_NOT_FOUND));
+        Fund fund = fundRepository.findByFundId(fundId);
         return new FundResponseDto(fund);
     }
 

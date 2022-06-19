@@ -1,15 +1,15 @@
 package com.example.clone6_backend.model;
 
-import com.example.clone6_backend.dto.request.FundRequestDto;
+import com.example.clone6_backend.dto.response.FundResponseDto;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Setter
 @Entity
 @Getter
-@NoArgsConstructor
 public class Fund {
 
     @Id
@@ -18,6 +18,9 @@ public class Fund {
 
     @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
+    private String subTitle;
 
     @Column(nullable = false)
     private String content;
@@ -38,12 +41,27 @@ public class Fund {
     private LocalDateTime expDate;
 
 
-    public Fund(FundRequestDto fundRequestDto){
-        this.category = fundRequestDto.getCategory();
-        this.content = fundRequestDto.getContent();
-        this.fundingGoal = fundRequestDto.getFundingGoal();
-        this.currentFund = fundRequestDto.getCurrentFund();
-
+    public Fund() {
+        this.fundId = getFundId();
+        this.title = getTitle();
+        this.subTitle = getSubTitle();
+        this.content = getContent();
+        this.category = getCategory();
+        this.fundingGoal = getFundingGoal();
+        this.currentFund = getCurrentFund();
+        this.imageURL = getImageURL();
+        this.expDate = getExpDate();
     }
 
+    public void detailPage(FundResponseDto fundResponseDto) {
+        this.fundId = fundResponseDto.getFundId();
+        this.title = fundResponseDto.getTitle();
+        this.subTitle = fundResponseDto.getSubTitle();
+        this.content = fundResponseDto.getContent();
+        this.category = fundResponseDto.getCategory();
+        this.fundingGoal = fundResponseDto.getFundingGoal();
+        this.currentFund = fundResponseDto.getCurrentFund();
+        this.imageURL = fundResponseDto.getImageURL();
+        this.expDate = fundResponseDto.getExpDate();
+    }
 }
