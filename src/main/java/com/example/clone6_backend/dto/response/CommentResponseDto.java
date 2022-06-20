@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class CommentResponseDto {
 
     private LocalDateTime createAt;
 
+        //원투메니 연습 한다고 주석 한거임
     private List<ReplyResponseDto> replyResponseDto;
 
 

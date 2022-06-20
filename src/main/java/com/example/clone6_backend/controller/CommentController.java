@@ -4,7 +4,6 @@ import com.example.clone6_backend.dto.request.CommentRequestDto;
 import com.example.clone6_backend.dto.response.CommentResponseDto;
 import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
-import com.example.clone6_backend.repository.CommentRepository;
 import com.example.clone6_backend.security.UserDetailsImpl;
 import com.example.clone6_backend.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +16,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class CommentController {
-
-    private final CommentRepository commentRepository;
 
     private final CommentService commentService;
 
