@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +20,7 @@ public class FundResponseDto {
     private Long fundingGoal;
     private Long currentFund;
     private String imageURL;
-    private LocalDateTime expDate;
+    private LocalDate expDate;
 
     public FundResponseDto(Fund fund) {
         this.fundId = fund.getFundId();

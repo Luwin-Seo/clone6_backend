@@ -3,6 +3,7 @@ package com.example.clone6_backend.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,6 +16,6 @@ public class FundRequestDto {
     private Long fundingGoal;
     private Long currentFund;
     private String imageURL;
-    private LocalDateTime expDate;
+    private LocalDate expDate;
 
 }

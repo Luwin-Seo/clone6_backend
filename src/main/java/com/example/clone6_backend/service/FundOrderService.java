@@ -2,6 +2,7 @@ package com.example.clone6_backend.service;
 
 import com.example.clone6_backend.dto.request.FundOrderDetailRequestDto;
 import com.example.clone6_backend.dto.request.FundOrderRequestDto;
+import com.example.clone6_backend.dto.response.RewardResponseDto;
 import com.example.clone6_backend.model.Fund;
 import com.example.clone6_backend.model.FundOrder;
 import com.example.clone6_backend.model.FundOrderDetail;
@@ -31,8 +32,10 @@ public class FundOrderService {
 
     private final FundRepository fundRepository;
 
+    private final RewardService rewardService;
+
     @Transactional
-    public ResponseEntity fundOrder(UserDetailsImpl userDetails, Long fundId, FundOrderRequestDto requestDto) {
+    public List<RewardResponseDto> fundOrder(UserDetailsImpl userDetails, Long fundId, FundOrderRequestDto requestDto) {
         int totalFunds = 0;
         FundOrder fundOrder = new FundOrder(userDetails,fundId,requestDto);
         List<FundOrderDetailRequestDto> detailRequestDtoList = requestDto.getOrderedRewards();
@@ -49,6 +52,6 @@ public class FundOrderService {
         fund.setCurrentFund(fund.getCurrentFund() + totalFunds);
         fundRepository.save(fund);
         fundOrderDetailRepository.saveAll(fundOrderDetailList);
-        return new ResponseEntity("펀딩내역이 성공적으로 저장되었습니다", HttpStatus.OK);
+        return rewardService.getRewards(fundId);
     }
 }
