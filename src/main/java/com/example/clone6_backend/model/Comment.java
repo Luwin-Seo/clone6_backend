@@ -37,7 +37,7 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String nickname;
 
-    @JsonIgnore //필수 
+    @JsonIgnore //필수
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reply> replys = new ArrayList<>();
 
