@@ -31,6 +31,10 @@ public class Reply extends Timestamped{
     @Column
     private String nickname;
 
+    @ManyToOne
+    @JoinColumn(name = "commment_id")
+    private Comment comment;
+
 
     public Reply(ReplyRequestDto requestDto, Long commentId, String nickname) {
         this.replyContent = requestDto.getReplyContent();

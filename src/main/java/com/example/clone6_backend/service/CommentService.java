@@ -86,7 +86,7 @@ public class CommentService {
         CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
         return new ResponseEntity(commentResponseDto, HttpStatus.OK);
     }
-
+//    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     public ResponseEntity delete(Long commentId, UserDetailsImpl userDetails) {
         Comment comment = commentRepository.findByCommentId(commentId);
         if(userDetails.getUser().getNickname().equals(comment.getNickname())){
