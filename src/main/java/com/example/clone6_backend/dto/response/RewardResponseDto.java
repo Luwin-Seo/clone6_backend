@@ -1,7 +1,11 @@
 package com.example.clone6_backend.dto.response;
 
 import com.example.clone6_backend.model.Reward;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class RewardResponseDto {
     private Long rewardId;
     private Long fundId;

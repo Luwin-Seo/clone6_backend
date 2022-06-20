@@ -1,6 +1,7 @@
 package com.example.clone6_backend.dataRunner;
 
 import com.example.clone6_backend.model.Fund;
+import com.example.clone6_backend.model.Reward;
 import com.example.clone6_backend.model.User;
 import com.example.clone6_backend.repository.FundRepository;
 import com.example.clone6_backend.repository.RewardRepository;
@@ -98,6 +99,264 @@ public class TestDataRunner implements ApplicationRunner {
         funds.add(fund6);
 
         fundRepository.saveAll(funds);
+
+        List<Reward> rewardList = new ArrayList<>();
+
+        Reward reward1 = new Reward(
+                1L,
+                "[울트라얼리버드] 포어 프리미엄",
+                "제트 포어 토너 1개 + 제트 큐어 크림 80ml 1개/n+제트 큐어 크림 30ml 1개 +제트패치 45EA 1개",
+                89670,
+                4000,
+                500,
+                200
+        );
+        rewardList.add(reward1);
+
+        Reward reward2 = new Reward(
+                1L,
+                "[울트라 얼리버드] Z라인 스페셜 세트",
+                "제트 포어 토너 3개+제트 큐어 크림 (30ml) 1개",
+                70000,
+                4000,
+                500,
+                500
+        );
+        rewardList.add(reward2);
+
+        Reward reward3 = new Reward(
+                1L,
+                "[슈퍼얼리버드] 포어 토너 4",
+                "제트 포어 토너 2개+제트 큐어 크림 (30ml) 1개",
+                60000,
+                4000,
+                500,
+                432
+        );
+        rewardList.add(reward3);
+
+        Reward reward4 = new Reward(
+                1L,
+                "[슈퍼얼리버드] 포어 토너 3",
+                "제트 포어 토너 4개",
+                50000,
+                4000,
+                500,
+                101
+        );
+        rewardList.add(reward4);
+
+        Reward reward5 = new Reward(
+                1L,
+                "[슈퍼얼리버드] 포어 토너 2",
+                "[얼리버드] 포어 토너 2 only",
+                42000,
+                4000,
+                500,
+                123
+        );
+        rewardList.add(reward5);
+
+        Reward reward7 = new Reward(
+                2L,
+                "[슈퍼얼리버드] 다같이 두잇",
+                "두잇두잇 레그웨어 10세트(총30pcs)",
+                100670,
+                4000,
+                500,
+                200
+        );
+        rewardList.add(reward7);
+
+        Reward reward8 = new Reward(
+                2L,
+                "[슈퍼얼리버드] 데일리 두잇",
+                "두잇두잇 레그웨어 4세트(총 12pcs)",
+                70000,
+                4000,
+                500,
+                184
+        );
+        rewardList.add(reward8);
+
+        Reward reward9 = new Reward(
+                2L,
+                "[슈퍼얼리버드] 챌린지 두잇",
+                "두잇두잇 레그웨어 2세트(총6pcs)",
+                60400,
+                4000,
+                500,
+                432
+        );
+        rewardList.add(reward9);
+
+        Reward reward10 = new Reward(
+                2L,
+                "[얼리버드]트라이 두잇",
+                "두잇두잇 레그웨어 1세트(총3pcs)",
+                522000,
+                4000,
+                500,
+                101
+        );
+        rewardList.add(reward10);
+
+        Reward reward11 = new Reward(
+                3L,
+                "[슈퍼얼리버드] 신품종 길쭉 홍감자 5kg",
+                "와디즈 특별 혜택가/n정상가_________32,900원/n슈퍼얼리혜택___21,900원/n______________(-11,000원 가격혜택. 약 33%!!)",
+                100670,
+                4000,
+                500,
+                200
+        );
+        rewardList.add(reward11);
+
+        Reward reward12 = new Reward(
+                3L,
+                "[얼리버드] 신품종 길쭉 홍감자 5kg",
+                "와디즈 특별 혜택가/n정상가_________32,900원/n슈퍼얼리혜택___21,900원/n______________(-11,000원 가격혜택. 약 33%!!)",
+                70000,
+                4000,
+                500,
+                184
+        );
+        rewardList.add(reward12);
+
+        Reward reward13 = new Reward(
+                3L,
+                "[얼리버드] 신품종 길쭉 홍감자 20kg",
+                "와디즈 특별 혜택가/n정상가_________32,900원/n슈퍼얼리혜택___21,900원/n______________(-11,000원 가격혜택. 약 33%!!)",
+                60400,
+                4000,
+                500,
+                432
+        );
+        rewardList.add(reward13);
+
+        Reward reward14 = new Reward(
+                4L,
+                "[싱글] 프리즈 블루",
+                "트렉스타 프리즈 블루 색상",
+                100670,
+                4000,
+                500,
+                200
+        );
+        rewardList.add(reward14);
+
+        Reward reward15 = new Reward(
+                4L,
+                "[싱글] 프리즈 베이지",
+                "트렉스타 프리즈 베이지 색상",
+                60400,
+                4000,
+                500,
+                500
+        );
+        rewardList.add(reward15);
+
+        Reward reward16 = new Reward(
+                4L,
+                "[커플] 프리즈 블루 + 베이지",
+                "트렉스타 프리즈 블루(남성용) + 베이지(여성용) / 2켤레/n- 블루(남성용): 250mm ~ 285mm / 5mm 단위로 사이즈 선택/n- 베이지(여성용): 230mm ~ 255mm / 5mm 단위로 사이즈 선택",
+                160400,
+                4000,
+                500,
+                432
+        );
+        rewardList.add(reward16);
+
+        Reward reward17 = new Reward(
+                5L,
+                "[슈퍼 얼리버드] A세트. 품위있게 부모님 마음에 쑥!",
+                "유선 본체 + 파우치 + 쑥패치 100장 + 충전기 + 케이블/n원가 123,000 / 30% 가격 혜택",
+                100670,
+                4000,
+                500,
+                500
+        );
+        rewardList.add(reward17);
+
+        Reward reward18 = new Reward(
+                5L,
+                "[슈퍼 얼리버드] B세트. 아름답게 모두 함께 하는 쑥!",
+                "유선 본체 + 파우치 + 쑥패치 30장 + 충전기 + 케이블/n원가 70,500 / 30% 가격 혜택",
+                70000,
+                4000,
+                500,
+                184
+        );
+        rewardList.add(reward18);
+
+        Reward reward19 = new Reward(
+                5L,
+                "[얼리버드] A세트. 품위있게 부모님 마음에 쑥!",
+                "유선 본체 + 파우치 + 쑥패치 100장 + 충전기 + 케이블/n원가 123,000 / 25% 가격 혜택",
+                60400,
+                4000,
+                500,
+                500
+        );
+        rewardList.add(reward19);
+
+        Reward reward20 = new Reward(
+                5L,
+                "[얼리버드] B세트. 아름답게 모두 함께 하는 쑥!",
+                "유선본체 + 파우치 + 쑥패치 30장 + 충전기 + 케이블/n원가 70,500 / 25% 가격 혜택",
+                522000,
+                4000,
+                500,
+                101
+        );
+        rewardList.add(reward20);
+
+        Reward reward21 = new Reward(
+                6L,
+                "[슈퍼얼리버드] 포시즌 레인코트(공용)_베이지 95",
+                "* 18% 혜택 (정상가 239,000원)/n* 컬러 : 베이지",
+                190670,
+                4000,
+                500,
+                200
+        );
+        rewardList.add(reward21);
+
+        Reward reward22 = new Reward(
+                6L,
+                "[슈퍼얼리버드] 레인코트(공용)_베이지 100 ",
+                "* 18% 혜택 (정상가 239,000원)/n* 컬러 : 베이지",
+                70000,
+                4000,
+                500,
+                500
+        );
+        rewardList.add(reward22);
+
+        Reward reward23 = new Reward(
+                6L,
+                "[슈퍼얼리버드] 레인코트(공용)_베이지 105",
+                "* 18% 혜택 (정상가 239,000원)/n* 컬러 : 베이지",
+                60400,
+                4000,
+                500,
+                132
+        );rewardList.add(reward23);
+
+        Reward reward24 = new Reward(
+                6L,
+                "[슈퍼얼리버드] 레인코트(공용)_베이지 105",
+                "* 18% 혜택 (정상가 239,000원)/n* 컬러 : 베이지",
+                60400,
+                4000,
+                500,
+                432
+        );
+        rewardList.add(reward24);
+
+        rewardRepository.saveAll(rewardList);
+
+
 
     }
 }
