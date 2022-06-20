@@ -65,7 +65,7 @@ public class CommentService {
     }
 
     public ResponseEntity postComment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails){
-        if(requestDto.getContent().equals("")){
+        if(requestDto.getContent()==null){
             throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
         }
         Comment comment = new Comment(requestDto, fundId, userDetails);
