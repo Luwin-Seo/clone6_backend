@@ -18,7 +18,7 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-
+//커밋해야해서 적음
     @GetMapping("/api/fund/{fundId}/comments")
     public List<CommentResponseDto> showComment(@PathVariable Long fundId){
         return commentService.showComments(fundId);
