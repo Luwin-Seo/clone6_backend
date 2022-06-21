@@ -43,10 +43,10 @@ public class KakaoUserService {
 
     public String kakaoLogin(String code) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
-        String accessToken = getAccessToken(code);
+//        String accessToken = getAccessToken(code);
 
         // 2. 토큰으로 카카오 API 호출
-        KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
+        KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(code);
 
         // 3. 필요시에 회원가입
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
