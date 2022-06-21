@@ -1,5 +1,6 @@
 package com.example.clone6_backend.model;
 
+import com.example.clone6_backend.dto.request.LikeRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,7 +8,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Likes {
@@ -23,10 +23,9 @@ public class Likes {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Builder
-    public Likes(Fund fund, User user) {
-        this.fund = fund;
-        this.user = user;
+    public Likes(LikeRequestDto likeRequestDto) {
+        this.fund = likeRequestDto.getFund();
+        this.user = likeRequestDto.getUser();
     }
 
 }
