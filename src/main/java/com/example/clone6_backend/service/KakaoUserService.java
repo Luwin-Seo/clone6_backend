@@ -43,10 +43,10 @@ public class KakaoUserService {
 
     public String kakaoLogin(String code) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
-//        String accessToken = getAccessToken(code);
+        String accessToken = getAccessToken(code);
 
         // 2. 토큰으로 카카오 API 호출
-        KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(code);
+        KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
 
         // 3. 필요시에 회원가입
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
@@ -66,7 +66,7 @@ public class KakaoUserService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "c59093f9d7de311ae961d6cb6a2522c5");
-        body.add("redirect_uri", "http://13.124.63.214:8080/user/kakao/callback");
+        body.add("redirect_uri", "http://localhost:3000/user/kakao/callback");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -88,6 +88,7 @@ public class KakaoUserService {
     }
 
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
+        System.out.println(accessToken);
         // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
@@ -143,7 +144,10 @@ public class KakaoUserService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = JwtTokenUtils.generateJwtToken(new UserDetailsImpl(kakaoUser));
-        return token;
+        UserDetailsImpl userDetails1 = ((UserDetailsImpl) authentication.getPrincipal());
+
+        System.out.println("userDetails1 : " + userDetails1.toString());
+
+        return JwtTokenUtils.generateJwtToken(userDetails1);
     }
 }
