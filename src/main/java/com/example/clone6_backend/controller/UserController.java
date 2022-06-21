@@ -40,7 +40,6 @@ public class UserController {
         return new ResponseEntity("카카오 사용자로 로그인 처리 되었습니다", HttpStatus.OK);
     }
 
-
     @GetMapping("/test")
     public String hello () {
         return "Hello World!";
