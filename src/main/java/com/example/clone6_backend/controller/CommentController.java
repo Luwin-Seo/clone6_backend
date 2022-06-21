@@ -24,19 +24,19 @@ public class CommentController {
         return commentService.showComments(fundId);
     }
 
-    @PostMapping("/api/fund/{fundId}/comment")
+    @PostMapping("/api/fund/{fundId}/comments")
     public ResponseEntity postComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long fundId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return commentService.postComment(requestDto, fundId, userDetails);
     }
 
-    @PutMapping("/api/fund/{fundId}/comment")
-    public ResponseEntity putComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long fundId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    @PutMapping("/api/fund/comments/{commentId}")
+    public ResponseEntity putComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
-        return commentService.putComment(requestDto, fundId, userDetails);
+        return commentService.putComment(requestDto, commentId, userDetails);
     }
 
-    @DeleteMapping("/api/fund/comment/{commentId}")
+    @DeleteMapping("/api/fund/comments/{commentId}")
     public ResponseEntity deleteComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return commentService.delete(commentId, userDetails);
     }

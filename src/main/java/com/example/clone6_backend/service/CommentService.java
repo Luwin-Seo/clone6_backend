@@ -74,13 +74,15 @@ public class CommentService {
         return new ResponseEntity(commentResponseDto, HttpStatus.OK);
     }
 
-    public ResponseEntity putComment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails){
-        Comment comment = commentRepository.findByFundId(fundId);
-        if(requestDto.getContent().equals("")){
+    public ResponseEntity putComment(CommentRequestDto requestDto, Long commentId, UserDetailsImpl userDetails) {
+        Comment comment = commentRepository.findByCommentId(commentId);
+        if (requestDto.getContent().equals("")) {
             throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
         }
-        comment.update(requestDto,userDetails);
-        commentRepository.save(comment);
+        if (userDetails.getUser().getNickname().equals(comment.getNickname())) {
+            comment.update(requestDto, userDetails);
+            commentRepository.save(comment);
+        }
         CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
         return new ResponseEntity(commentResponseDto, HttpStatus.OK);
     }

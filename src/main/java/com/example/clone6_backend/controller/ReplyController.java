@@ -4,6 +4,7 @@ import com.example.clone6_backend.dto.request.ReplyRequestDto;
 import com.example.clone6_backend.dto.response.ReplyResponseDto;
 import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
+import com.example.clone6_backend.model.Comment;
 import com.example.clone6_backend.security.UserDetailsImpl;
 import com.example.clone6_backend.service.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -19,21 +20,19 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-
-
-    @PostMapping("/api/fund/comment/{commentId}/reply")
-    public ResponseEntity createReply(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    @PostMapping("/api/fund/comments/{commentId}/reply")
+    public ResponseEntity createReply(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails, Comment comment){
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
-        return replyService.createReply(requestDto,commentId,userDetails);
+        return replyService.createReply(requestDto,commentId,userDetails, comment);
     }
 
-    @PutMapping("/api/fund/commment/{commentId}/reply")
-    public ResponseEntity update(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    @PutMapping("/api/fund/comments/reply/{replyId}")
+    public ResponseEntity update(@RequestBody ReplyRequestDto requestDto, @PathVariable Long replyId,@AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
-        return replyService.update(requestDto, commentId, userDetails);
+        return replyService.update(requestDto, replyId, userDetails);
     }
 
-    @DeleteMapping("/api/fund/comment/reply/{replyId}")
+    @DeleteMapping("/api/fund/comments/reply/{replyId}")
     public ResponseEntity delete(@PathVariable Long replyId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return replyService.delete(replyId, userDetails);
