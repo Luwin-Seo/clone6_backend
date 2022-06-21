@@ -1,5 +1,6 @@
 package com.example.clone6_backend.dto.response;
 
+import com.example.clone6_backend.model.Comment;
 import com.example.clone6_backend.model.Reply;
 import com.example.clone6_backend.model.User;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
@@ -18,14 +21,15 @@ public class ReplyResponseDto {
     private Long replyId;
     private String replyContent;
     private String nickname;
-    private LocalDateTime createAt;
+
+    private String calculatedTime;
 
     public ReplyResponseDto(Reply reply, User user){
         this.commentId = reply.getCommentId();
         this.replyId = reply.getReplyId();
         this.replyContent = reply.getReplyContent();
         this.nickname = user.getNickname();
-        this.createAt = reply.getCreatedAt();
+        this.calculatedTime = calculatedTime(reply);
     }
 
     public ReplyResponseDto(Reply reply){
@@ -33,7 +37,40 @@ public class ReplyResponseDto {
         this.replyId = reply.getReplyId();
         this.replyContent = reply.getReplyContent();
         this.nickname = reply.getNickname();
-        this.createAt = reply.getCreatedAt();
+        this.calculatedTime = calculatedTime(reply);
     }
 
+    //시간 x초 전, x분 전, x시간 전, x일 전, x달 전, x년 전 표시
+    public static String calculatedTime(Reply reply) {
+        final int SEC = 60;
+        final int MIN = 60;
+        final int HOUR = 24;
+        final int DAY = 30;
+        final int MONTH = 12;
+        String msg = null;
+
+        LocalDateTime rightNow = LocalDateTime.now();
+        LocalDateTime createdAt = reply.getCreatedAt();
+        long MILLIS = ChronoUnit.MILLIS.between(createdAt, rightNow);
+        long calculate = MILLIS/1000;
+
+        if (calculate < SEC){
+            msg = calculate + "초 전";
+        } else if ((calculate /= SEC) < MIN) {
+            msg = calculate + "분 전";
+        } else if ((calculate /= MIN) < HOUR) {
+            msg = (calculate) + "시간 전";
+        } else if ((calculate /= HOUR) < DAY) {
+            msg = (calculate) + "일 전";
+        } else if ((calculate /= DAY) < MONTH) {
+            msg = (calculate) + "개월 전";
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat( "yyyy");
+            String curYear = sdf.format(rightNow);
+            String passYear = sdf.format(createdAt);
+            int diffYear = Integer.parseInt(curYear) - Integer.parseInt(passYear);
+            msg = diffYear + "년 전";
+        }
+        return msg;
+    }
 }
