@@ -40,6 +40,7 @@ public class CommentResponseDto {
         this.category = comment.getCategory();
         this.createAt = comment.getCreatedAt();
     }
+
     public CommentResponseDto(Comment comment) {
         this.fundId = comment.getFundId();
         this.commentId = comment.getCommentId();
