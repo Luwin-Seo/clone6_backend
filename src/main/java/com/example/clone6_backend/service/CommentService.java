@@ -79,9 +79,11 @@ public class CommentService {
         if (requestDto.getContent().equals("")) {
             throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
         }
-        if (userDetails.getUser().getNickname().equals(comment.getNickname())) {
+        if (userDetails.getUser().getId().equals(comment.getId())) {
             comment.update(requestDto, userDetails);
             commentRepository.save(comment);
+        }else{
+            throw new CustomException(ErrorCode.INVALID_AUTHORITY);
         }
         CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
         return new ResponseEntity(commentResponseDto, HttpStatus.OK);
@@ -89,10 +91,11 @@ public class CommentService {
 //    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     public ResponseEntity delete(Long commentId, UserDetailsImpl userDetails) {
         Comment comment = commentRepository.findByCommentId(commentId);
-        if(userDetails.getUser().getNickname().equals(comment.getNickname())){
+        if(userDetails.getUser().getId().equals(comment.getId())){
             commentRepository.delete(comment);
             return new ResponseEntity("삭제 완료",HttpStatus.OK);
+        } else{
+            throw new CustomException(ErrorCode.INVALID_AUTHORITY);
         }
-        throw new CustomException(ErrorCode.INVALID_AUTHORITY);
     }
 }

@@ -32,7 +32,7 @@ public class CommentController {
 
     @PutMapping("/api/fund/comments/{commentId}")
     public ResponseEntity putComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
+//        if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return commentService.putComment(requestDto, commentId, userDetails);
     }
 

@@ -1,6 +1,7 @@
 package com.example.clone6_backend.service;
 
 import com.example.clone6_backend.dto.request.ReplyRequestDto;
+import com.example.clone6_backend.dto.response.CommentResponseDto;
 import com.example.clone6_backend.dto.response.ReplyResponseDto;
 import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
@@ -35,10 +36,12 @@ public class ReplyService {
         if(requestDto.getReplyContent().equals("")){
             throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
         }
-        if (userDetails.getUser().getNickname().equals(reply.getNickname())){
+        if (userDetails.getUser().getId().equals(reply.getId())){
             reply.update(requestDto,userDetails);
             replyRepository.save(reply);
-        }
+        }else{
+        throw new CustomException(ErrorCode.INVALID_AUTHORITY);
+    }
         ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply);
         return new ResponseEntity(replyResponseDto, HttpStatus.OK);
     }
