@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -33,12 +34,9 @@ public class UserController {
     }
 
     @GetMapping("/user/kakao/callback")
-    public ResponseEntity kakaoLogin(@RequestParam String code) throws JsonProcessingException {
-        try {
-            kakaoUserService.kakaoLogin(code);
-        } catch (Exception e) {
-            throw new CustomException(ErrorCode.INVALID_LOGIN_ATTEMPT);
-        }
+    public ResponseEntity kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+            String token = kakaoUserService.kakaoLogin(code);
+            response.addHeader("Authorization", "BEARER" + " " + token);
         return new ResponseEntity("카카오 사용자로 로그인 처리 되었습니다", HttpStatus.OK);
     }
 
