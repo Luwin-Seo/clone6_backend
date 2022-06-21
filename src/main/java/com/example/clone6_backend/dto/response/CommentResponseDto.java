@@ -28,7 +28,7 @@ public class CommentResponseDto {
 
     private LocalDateTime createAt;
 
-        //원투메니 연습 한다고 주석 한거임
+    //원투메니 연습 한다고 주석 한거임
     private List<ReplyResponseDto> replyResponseDto;
 
 

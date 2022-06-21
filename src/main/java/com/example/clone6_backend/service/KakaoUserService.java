@@ -3,10 +3,13 @@ package com.example.clone6_backend.service;
 import com.example.clone6_backend.dto.KakaoUserInfoDto;
 import com.example.clone6_backend.model.User;
 import com.example.clone6_backend.repository.UserRepository;
+import com.example.clone6_backend.security.FormLoginSuccessHandler;
 import com.example.clone6_backend.security.UserDetailsImpl;
+import com.example.clone6_backend.security.jwt.JwtTokenUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,9 +25,12 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class KakaoUserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -35,7 +41,7 @@ public class KakaoUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void kakaoLogin(String code) throws JsonProcessingException {
+    public String kakaoLogin(String code) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
 
@@ -46,7 +52,9 @@ public class KakaoUserService {
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
 
         // 4. 강제 로그인 처리
-        forceLogin(kakaoUser);
+        return forceLogin(kakaoUser);
+
+        // 5. 강제 토큰 삽입처리
     }
 
     private String getAccessToken(String code) throws JsonProcessingException {
@@ -57,8 +65,8 @@ public class KakaoUserService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "61db540d862894225a4938d0133cb467");
-        body.add("redirect_uri", "http://localhost:8080/user/kakao/callback");
+        body.add("client_id", "c59093f9d7de311ae961d6cb6a2522c5");
+        body.add("redirect_uri", "http://13.124.63.214:8080/user/kakao/callback");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -110,7 +118,7 @@ public class KakaoUserService {
 
     private User registerKakaoUserIfNeeded(KakaoUserInfoDto kakaoUserInfo) {
         // DB 에 중복된 Kakao Id 가 있는지 확인
-        String kakaoId = kakaoUserInfo.getId().toString();
+        String kakaoId = Long.toString(kakaoUserInfo.getId());
         String email = kakaoUserInfo.getEmail();
         User kakaoUser = (email == null) ? userRepository.findByUsername(kakaoId)
                 .orElse(null) : userRepository.findByUsername(email).orElse(null);
@@ -130,9 +138,12 @@ public class KakaoUserService {
         return kakaoUser;
     }
 
-    private void forceLogin(User kakaoUser) {
+    private String forceLogin(User kakaoUser) {
         UserDetails userDetails = new UserDetailsImpl(kakaoUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String token = JwtTokenUtils.generateJwtToken(new UserDetailsImpl(kakaoUser));
+        return token;
     }
 }

@@ -3,9 +3,12 @@ package com.example.clone6_backend.service;
 import com.example.clone6_backend.dto.request.FundOrderDetailRequestDto;
 import com.example.clone6_backend.dto.request.FundOrderRequestDto;
 import com.example.clone6_backend.dto.response.RewardResponseDto;
+import com.example.clone6_backend.exceptionHandler.CustomException;
+import com.example.clone6_backend.exceptionHandler.ErrorCode;
 import com.example.clone6_backend.model.Fund;
 import com.example.clone6_backend.model.FundOrder;
 import com.example.clone6_backend.model.FundOrderDetail;
+import com.example.clone6_backend.model.Reward;
 import com.example.clone6_backend.repository.FundOrderDetailRepository;
 import com.example.clone6_backend.repository.FundOrderRepository;
 import com.example.clone6_backend.repository.FundRepository;
@@ -47,6 +50,13 @@ public class FundOrderService {
             fundOrderDetailList.add(fundOrderDetail);
             int price = rewardRepository.findByRewardId(fundOrderDetailRequestDto.getRewardId()).getPrice();
             totalFunds += price * fundOrderDetail.getQuantity();
+            Reward reward = this.rewardRepository.findByRewardId(fundOrderDetailRequestDto.getRewardId());
+            if (reward.getQuantityLimit() < reward.getQuantity() + fundOrderDetail.getQuantity()) {
+                throw new CustomException(ErrorCode.LIMIT_EXCEEDED);
+            }
+
+            reward.setQuantity(reward.getQuantity() + fundOrderDetail.getQuantity());
+            this.rewardRepository.save(reward);
         }
         Fund fund = fundRepository.findByFundId(fundId);
         fund.setCurrentFund(fund.getCurrentFund() + totalFunds);
