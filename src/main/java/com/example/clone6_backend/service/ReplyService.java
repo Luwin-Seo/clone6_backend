@@ -1,7 +1,6 @@
 package com.example.clone6_backend.service;
 
 import com.example.clone6_backend.dto.request.ReplyRequestDto;
-import com.example.clone6_backend.dto.response.CommentResponseDto;
 import com.example.clone6_backend.dto.response.ReplyResponseDto;
 import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
