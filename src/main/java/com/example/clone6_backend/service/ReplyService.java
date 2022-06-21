@@ -23,7 +23,7 @@ public class ReplyService {
         if(requestDto.getReplyContent().equals("")){
             throw new CustomException(ErrorCode.EMPTY_CONTENT);
         }
-        Reply reply = new Reply(requestDto, commentId, userDetails.getUser().getNickname());
+        Reply reply = new Reply(requestDto, commentId, userDetails);
         replyRepository.save(reply);
         ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply);
         return new ResponseEntity(replyResponseDto, HttpStatus.OK);

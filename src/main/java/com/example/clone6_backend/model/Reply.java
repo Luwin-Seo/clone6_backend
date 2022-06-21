@@ -36,12 +36,16 @@ public class Reply extends Timestamped{
     private Comment comment;
 
 
-    public Reply(ReplyRequestDto requestDto, Long commentId, String nickname) {
+    public Reply(ReplyRequestDto requestDto, Long commentId, UserDetailsImpl userDetails) {
+        this.id = userDetails.getUser().getId();
         this.replyContent = requestDto.getReplyContent();
         this.commentId = commentId;
-        this.nickname = nickname;
+        this.nickname = userDetails.getUser().getNickname();
     }
 
     public void update(ReplyRequestDto requestDto, UserDetailsImpl userDetails) {
+        this.id = userDetails.getUser().getId();
+        this.replyContent = requestDto.getReplyContent();
+        this.nickname = userDetails.getUser().getNickname();
     }
 }
