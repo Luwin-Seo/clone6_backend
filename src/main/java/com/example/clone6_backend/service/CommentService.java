@@ -1,5 +1,6 @@
 package com.example.clone6_backend.service;
 
+
 import com.example.clone6_backend.dto.request.CommentRequestDto;
 import com.example.clone6_backend.dto.response.CommentResponseDto;
 import com.example.clone6_backend.dto.response.ReplyResponseDto;
@@ -17,11 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 @Service
 @RequiredArgsConstructor
@@ -67,7 +65,7 @@ public class CommentService {
     }
 
     public ResponseEntity postComment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails){
-        if(requestDto.getContent().equals("")){
+        if(requestDto.getContent()==null){
             throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
         }
         Comment comment = new Comment(requestDto, fundId, userDetails);

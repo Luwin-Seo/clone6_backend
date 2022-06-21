@@ -33,4 +33,10 @@ public class User {
         this.password = requestDto.getPassword();
         this.nickname = requestDto.getNickname();
     }
+
+    public User(String username, String password, String nickname) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+    }
 }

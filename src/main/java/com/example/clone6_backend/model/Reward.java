@@ -1,6 +1,6 @@
 package com.example.clone6_backend.model;
 
-import com.example.clone6_backend.dto.request.RewardRequsetDto;
+import com.example.clone6_backend.dto.request.RewardRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,16 +35,26 @@ public class Reward {
     @Column
     private int quantityLimit;
 
-    @Column int quantity;
+    @Column
+    private int quantity;
 
-    public Reward (RewardRequsetDto requsetDto){
-        this.fundId = requsetDto.getFundId();
-        this.rewardTitle = requsetDto.getRewardTitle();
-        this.rewardContent = requsetDto.getRewardContent();
-        this.price = requsetDto.getPrice();
-        this.deliveryFee = requsetDto.getDeliveryFee();;
-        this.quantityLimit = requsetDto.getQuantityLimit();
-        this.quantity = requsetDto.getQuantity();
+    public Reward (RewardRequestDto requestDto){
+        this.fundId = requestDto.getFundId();
+        this.rewardTitle = requestDto.getRewardTitle();
+        this.rewardContent = requestDto.getRewardContent();
+        this.price = requestDto.getPrice();
+        this.deliveryFee = requestDto.getDeliveryFee();;
+        this.quantityLimit = requestDto.getQuantityLimit();
+        this.quantity = requestDto.getQuantity();
     }
 
+    public Reward(Long fundId, String rewardTitle, String rewardContent, int price, int deliveryFee, int quantityLimit, int quantity) {
+        this.fundId = fundId;
+        this.rewardTitle = rewardTitle;
+        this.rewardContent = rewardContent;
+        this.price = price;
+        this.deliveryFee = deliveryFee;
+        this.quantityLimit = quantityLimit;
+        this.quantity = quantity;
+    }
 }

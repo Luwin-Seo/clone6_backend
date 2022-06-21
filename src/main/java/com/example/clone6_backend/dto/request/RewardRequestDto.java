@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RewardRequsetDto {
+public class RewardRequestDto {
     private Long fundId;
     private String rewardTitle;
     private String rewardContent;

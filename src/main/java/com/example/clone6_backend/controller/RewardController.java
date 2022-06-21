@@ -1,6 +1,6 @@
 package com.example.clone6_backend.controller;
 
-import com.example.clone6_backend.dto.request.RewardRequsetDto;
+import com.example.clone6_backend.dto.request.RewardRequestDto;
 import com.example.clone6_backend.dto.response.RewardResponseDto;
 import com.example.clone6_backend.model.Reward;
 import com.example.clone6_backend.repository.RewardRepository;
@@ -18,9 +18,9 @@ public class RewardController {
 
     private final RewardService rewardService;
 
-    @PostMapping("/tset/reward/{}")
-    public Reward postReward(@RequestBody RewardRequsetDto requsetDto) {
-        return rewardRepository.save(new Reward(requsetDto));
+    @PostMapping("/tset/reward")
+    public Reward postReward(@RequestBody RewardRequestDto requestDto) {
+        return rewardRepository.save(new Reward(requestDto));
     }
 
     @GetMapping("/api/fund/{fundId}/rewards")

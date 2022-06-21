@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter // get 함수를 자동 생성합니다.
@@ -20,4 +21,6 @@ public abstract class Timestamped {
     @LastModifiedDate // 마지막 변경 시점
     private LocalDateTime modifiedAt;
 
+    @CreatedDate
+    private LocalDate createdAtDateOnly;
 }

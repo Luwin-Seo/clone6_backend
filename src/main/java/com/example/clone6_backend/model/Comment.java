@@ -42,6 +42,7 @@ public class Comment extends Timestamped {
     private List<Reply> replys = new ArrayList<>();
 
     public Comment(CommentRequestDto requestDto, Long fundId, UserDetailsImpl userDetails) {
+        this.id = userDetails.getUser().getId();
         this.fundId = fundId;
         this.content = requestDto.getContent();
         this.nickname = userDetails.getUser().getNickname();
