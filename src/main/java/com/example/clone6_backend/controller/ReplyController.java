@@ -19,8 +19,6 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-
-
     @PostMapping("/api/fund/comment/{commentId}/reply")
     public ResponseEntity createReply(@RequestBody ReplyRequestDto requestDto, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
