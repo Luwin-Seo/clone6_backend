@@ -19,12 +19,12 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping("/api/fund/{fundId}/comments")
+    @RequestMapping(value="/api/fund/{fundId}/comments", method = {RequestMethod.GET})
     public List<CommentResponseDto> showComment(@PathVariable Long fundId){
         return commentService.showComments(fundId);
     }
 
-    @PostMapping("/api/fund/{fundId}/comments")
+    @RequestMapping(value="/api/fund/{fundId}/comments", method = {RequestMethod.POST})
     public ResponseEntity postComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long fundId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return commentService.postComment(requestDto, fundId, userDetails);
