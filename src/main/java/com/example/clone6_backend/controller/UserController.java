@@ -35,9 +35,13 @@ public class UserController {
 
     @GetMapping("/user/kakao/callback")
     public ResponseEntity kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-            String token = kakaoUserService.kakaoLogin(code);
-            response.addHeader("Authorization", "BEARER" + " " + token);
-        return new ResponseEntity("카카오 사용자로 로그인 처리 되었습니다", HttpStatus.OK);
+
+        try { // 회원가입 진행 성공시 true
+            kakaoUserService.kakaoLogin(code, response);
+            return new ResponseEntity("카카오 사용자로 로그인 되었습니다", HttpStatus.OK);
+        }catch (Exception e){ // 에러나면 false
+            throw new CustomException(ErrorCode.INVALID_LOGIN_ATTEMPT);
+        }
     }
 
     @GetMapping("/test")

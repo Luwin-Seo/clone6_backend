@@ -27,21 +27,17 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.util.UUID;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class KakaoUserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    @Autowired
-    public KakaoUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    public String kakaoLogin(String code) throws JsonProcessingException {
+    @Transactional
+    public void kakaoLogin(String code,HttpServletResponse response) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
 
@@ -52,9 +48,7 @@ public class KakaoUserService {
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
 
         // 4. 강제 로그인 처리
-        return forceLogin(kakaoUser);
-
-        // 5. 강제 토큰 삽입처리
+        jwtTokenCreate(kakaoUser,response);
     }
 
     private String getAccessToken(String code) throws JsonProcessingException {
@@ -88,7 +82,6 @@ public class KakaoUserService {
     }
 
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
-        System.out.println(accessToken);
         // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
@@ -110,10 +103,10 @@ public class KakaoUserService {
         Long id = jsonNode.get("id").asLong();
         String nickname = jsonNode.get("properties")
                 .get("nickname").asText();
-        String email = jsonNode.get("kakao_account")
-                .get("email").asText();
+        String email = (jsonNode.get("kakao_account")
+                .get("email") != null) ? jsonNode.get("kakao_account")
+                .get("email").asText() : null;
 
-        System.out.println("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
         return new KakaoUserInfoDto(id, nickname, email);
     }
 
@@ -139,15 +132,15 @@ public class KakaoUserService {
         return kakaoUser;
     }
 
-    private String forceLogin(User kakaoUser) {
+    private void jwtTokenCreate(User kakaoUser, HttpServletResponse response) {
+
         UserDetails userDetails = new UserDetailsImpl(kakaoUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserDetailsImpl userDetails1 = ((UserDetailsImpl) authentication.getPrincipal());
+        final String token = JwtTokenUtils.generateJwtToken(userDetails1);
+        response.addHeader("Authorization", "BEARER" + " " + token);
 
-        System.out.println("userDetails1 : " + userDetails1.toString());
-
-        return JwtTokenUtils.generateJwtToken(userDetails1);
     }
 }

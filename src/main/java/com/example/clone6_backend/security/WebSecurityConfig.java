@@ -131,6 +131,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("GET,/user/kakao/**");
         skipPathList.add("POST, https://kauth.kakao.com/**");
         skipPathList.add("POST, https://kapi.kakao.com/**");
+        skipPathList.add("GET, http://localhost:3000/user/**");
+
 
 
 
