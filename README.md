@@ -14,7 +14,7 @@ http://btae.shop.s3-website.ap-northeast-2.amazonaws.com/
     - React, Redux, React-query, AOS, axios
 - Back-end
     - 개발언어 : Java
-    - Spring boot, Spring securuty, MySQL
+    - Spring boot, Spring securuty with JWT, H2
 - 공통
     - 형상관리 : Git
     - 협업 툴 : Github, Notion
