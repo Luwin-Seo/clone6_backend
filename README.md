@@ -32,6 +32,9 @@ http://btae.shop.s3-website.ap-northeast-2.amazonaws.com/
 ## API 설계
 https://www.notion.so/94fe0eb923904da5bb0188776178789d?v=959851f3406c47fa88e4461a22ea59a2
 
+## ERD 설계
+![clone6_backend](https://user-images.githubusercontent.com/105038064/175245159-149caf0d-4f0e-42bf-866c-9334028d8003.png)
+
 ### Repository
 - [Front-end Repository] https://github.com/bigtae1007/frontend_clone
 - [Back-end Repository] https://github.com/Luwin-Seo/clone6_backend.git
