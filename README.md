@@ -8,12 +8,7 @@ http://btae.shop.s3-website.ap-northeast-2.amazonaws.com/
 'wadiz'를 모델로 삼아 클론 코딩 하였습니다.
 <br><br>
 
-### 2. 프로젝트 목적
-- 이 프로젝트는 🌊항해99의 미니프로젝트2 과제입니다.
-- 3주간의 주특기 주차에서 갈고 닦은 실력을 뽐내기 위해, 그리고 처음 접해보는 프론트엔드와 백엔드의 협업 과정에 익숙해지고자 만들었습니다!
-<br><br>
-
-### 3. 🛠 Tech Skills
+### 2. 🛠 Tech Skills
 - Front-end
     - 개발언어 : JavaScript
     - React, Redux, React-query, AOS, axios
@@ -23,14 +18,13 @@ http://btae.shop.s3-website.ap-northeast-2.amazonaws.com/
 - 공통
     - 형상관리 : Git
     - 협업 툴 : Github, Notion
-    - 디자인 공유 : Figma
 <br><br>
 
-### 4. 👨‍👩‍👧‍👧 프로젝트 멤버
+### 3. 👨‍👩‍👧‍👧 프로젝트 멤버
 - Front-end : 박태형, 손유정
 - Back-end : 신상우, 김규관, 서만원
 
-### 5. ⏰ 프로젝트 기간
+### 4. ⏰ 프로젝트 기간
 - 2022.6.17. ~ 2022.6.23.(1주)
 
 ----
