@@ -22,8 +22,7 @@ public class Reply extends Timestamped{
     @Column(nullable = false)
     private Long commentId;
 
-    @Column()
-    private Long fundId;
+
 
     @Column(nullable = false)
     private String replyContent;
@@ -31,17 +30,14 @@ public class Reply extends Timestamped{
     @Column
     private String nickname;
 
-    @ManyToOne
-    @JoinColumn(name = "commment_id")
-    private Comment comment;
 
 
-    public Reply(ReplyRequestDto requestDto, Long commentId, UserDetailsImpl userDetails, Comment comment) {
+
+    public Reply(ReplyRequestDto requestDto, Long commentId, UserDetailsImpl userDetails) {
         this.id = userDetails.getUser().getId();
         this.replyContent = requestDto.getReplyContent();
         this.commentId = commentId;
         this.nickname = userDetails.getUser().getNickname();
-        this.fundId = comment.getFundId();
     }
 
     public void update(ReplyRequestDto requestDto, UserDetailsImpl userDetails) {
