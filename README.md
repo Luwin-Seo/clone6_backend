@@ -1,5 +1,5 @@
 # howiz
-행해99 7주차 클론 코딩 프로젝트
+행해99 7주차 클론 코딩 프로젝트 <br>
 http://btae.shop.s3-website.ap-northeast-2.amazonaws.com/
 
 ## 프로젝트 개요
