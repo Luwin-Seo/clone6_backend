@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentRequestDto {
 
-//    private Long fundId;
 
     private String content;
 
-//    private String nickname;
 
     private String category;
 

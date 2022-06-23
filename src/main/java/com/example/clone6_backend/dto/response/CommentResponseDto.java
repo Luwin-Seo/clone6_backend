@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,9 +30,7 @@ public class CommentResponseDto {
 
     private String calculatedTime;
 
-    //원투메니 연습 한다고 주석 한거임
-    private List<ReplyResponseDto> replyResponseDto;
-
+    private List<ReplyResponseDto> replyResponseDto = new ArrayList<>();
 
     public CommentResponseDto(Comment comment, User user) {
         this.fundId = comment.getFundId();

@@ -4,7 +4,6 @@ import com.example.clone6_backend.dto.request.ReplyRequestDto;
 import com.example.clone6_backend.dto.response.ReplyResponseDto;
 import com.example.clone6_backend.exceptionHandler.CustomException;
 import com.example.clone6_backend.exceptionHandler.ErrorCode;
-import com.example.clone6_backend.model.Comment;
 import com.example.clone6_backend.model.Reply;
 import com.example.clone6_backend.repository.ReplyRepository;
 import com.example.clone6_backend.security.UserDetailsImpl;
@@ -20,11 +19,11 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    public ResponseEntity createReply(ReplyRequestDto requestDto, Long commentId, UserDetailsImpl userDetails, Comment comment) {
+    public ResponseEntity createReply(ReplyRequestDto requestDto, Long commentId, UserDetailsImpl userDetails) {
         if(requestDto.getReplyContent().equals("")){
             throw new CustomException(ErrorCode.EMPTY_CONTENT);
         }
-        Reply reply = new Reply(requestDto, commentId, userDetails, comment);
+        Reply reply = new Reply(requestDto, commentId, userDetails);
         replyRepository.save(reply);
         ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply);
         return new ResponseEntity(replyResponseDto, HttpStatus.OK);
@@ -35,10 +34,12 @@ public class ReplyService {
         if(requestDto.getReplyContent().equals("")){
             throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
         }
-        if (userDetails.getUser().getNickname().equals(reply.getNickname())){
+        if (userDetails.getUser().getId().equals(reply.getId())){
             reply.update(requestDto,userDetails);
             replyRepository.save(reply);
-        }
+        }else{
+        throw new CustomException(ErrorCode.INVALID_AUTHORITY);
+    }
         ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply);
         return new ResponseEntity(replyResponseDto, HttpStatus.OK);
     }

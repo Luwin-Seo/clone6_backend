@@ -8,4 +8,6 @@
 //
 //public interface LikeRepository extends JpaRepository<Likes, Long> {
 //    Likes findByLikeAndFund(User user, Fund fund);
+//
+//    Long deleteByFund(Fund fund);
 //}

@@ -19,12 +19,12 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @RequestMapping(value="/api/fund/{fundId}/comments", method = {RequestMethod.GET})
+    @GetMapping("/api/fund/{fundId}/comments")
     public List<CommentResponseDto> showComment(@PathVariable Long fundId){
         return commentService.showComments(fundId);
     }
 
-    @RequestMapping(value="/api/fund/{fundId}/comments", method = {RequestMethod.POST})
+    @PostMapping("/api/fund/{fundId}/comments")
     public ResponseEntity postComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long fundId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return commentService.postComment(requestDto, fundId, userDetails);
@@ -32,7 +32,7 @@ public class CommentController {
 
     @PutMapping("/api/fund/comments/{commentId}")
     public ResponseEntity putComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
+//        if(userDetails == null) {throw new CustomException(ErrorCode.AUTH_TOKEN_NOT_FOUND);}
         return commentService.putComment(requestDto, commentId, userDetails);
     }
 
