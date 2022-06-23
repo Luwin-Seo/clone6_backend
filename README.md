@@ -3,11 +3,11 @@
 
 :bulb: Back-end Git
 
-서만원 :https://github.com/Luwin-Seo
+서만원 : https://github.com/Luwin-Seo
 
 신상우 : https://github.com/shinsang97
 
-김규관 : 
+김규관 : https://github.com/kwan97
 
 🚀 스택
 Back-end
